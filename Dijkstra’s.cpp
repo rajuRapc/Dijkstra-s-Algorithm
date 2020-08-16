@@ -1,6 +1,4 @@
-﻿
-#include <limits.h> 
-#include <stdio.h> 
+// INT_MAX = 2147483647
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -10,7 +8,7 @@ using namespace std;
 
 vector<int> dijkstra(vector <vector <int> > graph, vector <int>& parents, int verticies, int src);
 int minDistance(vector <int> weight, vector <bool> visted, int vecticies);
-void printSolution(vector <int>weight, vector <int>parents, int verticies);
+void printFunction(vector <int>weight, vector <int>parents, int verticies);
 
 // driver program 
 int main()
@@ -40,7 +38,7 @@ int main()
     vector <int>  weight(verticies); //eaxch node distance from the source vector 
 
    weight = dijkstra(graph,parents, verticies, source); // makes the call to dijkstra algorithm
-   printSolution(weight, parents, verticies); // ptints the distance for each node from the root and the bath to get there 
+   printFunction(weight, parents, verticies); // ptints the distance for each node from the root and the bath to get there 
 
    
    file.close();
@@ -56,13 +54,13 @@ vector<int> dijkstra(vector <vector <int> > graph, vector <int>& parents, int ve
     weight[src] = 0; // set distance from source to source to 0
     parents[src] = -1; //set parent of soruce to -1, dose not exist, so we knwo when we are are at the source when printing 
 
-    //steps through until all nodes are check 
+    //steps through graph
     for (int count = 0; count < verticies - 1; count++) {
 
         int u = minDistance(weight, visited, verticies); //checks for the smalles unvisted node 
         visited[u] = 1; // mark the smallest unvisted node as visted 
 
-        //update adjacent verticies 
+        //update adjacent verticies
         for (int v = 0; v < verticies; v++)
 
             if (!visited[v] && // no need to check visted nodes
@@ -95,19 +93,25 @@ int minDistance(vector <int> weight, vector <bool> visted, int vecticies)
 
 
 // print weight/distance array and the path to get there 
-void printSolution(vector <int>weight, vector <int>parents, int verticies)
+void printFunction(vector <int>weight, vector <int>parents, int verticies)
 {
     string path;
     cout << "data display as node diststance from source to the get to node and the path to get there" << endl;
 
     for (int i = 0; i < verticies; i++) {
-        int temp = parents[i];
-        path = to_string(i);
-        while (temp != -1){
-            path = to_string(temp) + "->" + path;
-            temp = parents[temp];
+
+        if (weight[i] < INT_MAX)
+        {
+            int temp = parents[i];
+            path = to_string(i);
+            while (temp != -1){
+                path = to_string(temp) + "->" + path;
+                temp = parents[temp];
+            }
+            cout << i << "\t\t" << weight[i] << "\t\t\t" << path << endl;
         }
-        cout << i << "\t\t" << weight[i] << "\t\t\t" << path << endl;
+        else
+            cout << i << "\t\t" << "infinity" << "\t\t\t" << "dose not exist" << endl;
         
     }
 }
