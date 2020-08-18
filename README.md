@@ -1,7 +1,10 @@
 # Dijkstra-s-Algorithm
 Finds the shortest path from source to all other nodes in the graph
+Do not use negative numbers for distance or weight of an edge 
 
 # Infinity = INT_MAX = 2147483647
+# 0 <= graph[i] < 2147483647
+# 1 <= verticies <= 2147483647
 
 # The Driver program/ main funtion 
 
